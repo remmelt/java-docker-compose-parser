@@ -1,0 +1,31 @@
+---
+
+image: helloworld:12345678
+build: /path/to/build/dir
+
+dockerfile: Dockerfile-alternate
+
+command: bundle exec thin -p 3000
+
+links:
+- db
+- db:database
+- redis
+
+expose:
+- "3000"
+- 8000
+
+volumes:
+- /var/lib/mysql
+- ./cache:/tmp/cache
+- ~/configs:/etc/configs/:ro
+
+### This syntax is not supported:
+#environment:
+#  RACK_ENV: development
+#  SESSION_SECRET:
+
+environment:
+- RACK_ENV=development
+- SESSION_SECRET
